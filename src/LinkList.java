@@ -26,6 +26,24 @@ public class LinkList {
         return temp;
     }
 
+    public void insert(int key, double dd)
+    {
+        Link newLink = new Link(key, dd);
+        Link previous = null;
+        Link current = first;
+
+        while(current != null && key > current.dData){
+            previous = current;
+            current = current.next;
+        }
+
+        if(previous == null)
+            first = newLink;
+        else
+            previous.next = newLink;
+        newLink.next = current;
+    }
+
     public Link find(int key)
     {
         Link current = first;
@@ -59,6 +77,8 @@ public class LinkList {
             previous.next = current.next;
         return current;
     }
+
+
 
     public void displayList()
     {
