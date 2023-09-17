@@ -261,7 +261,7 @@ public class BinaryTreeApp {
     public static void main(String[] args) throws IOException {
         int value;
         Tree theTree = new Tree();
-
+        // add to the main method
         theTree.insert(50, 1.5);
         theTree.insert(25, 1.2);
         theTree.insert(75, 1.7);
