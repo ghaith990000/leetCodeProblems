@@ -1,117 +1,76 @@
 package trees;
 
-class BinaryTreeNode {
-    private int data;
-    private BinaryTreeNode left;
-    private BinaryTreeNode right;
+class Node {
+    public int iData;
+    public double dData;
+    public Node leftChild;
+    public Node rightChild;
 
-    public BinaryTreeNode(int data)
+    public void displayNode()
     {
-        this.data = data;
-        this.left = null;
-        this.right = null;
-    }
-
-    public int getData(){
-        return data;
-    }
-
-    public BinaryTreeNode getLeft(){
-        return left;
-    }
-
-    public BinaryTreeNode getRight(){
-        return right;
-    }
-
-    public void setLeft(BinaryTreeNode left){
-        this.left = left;
-    }
-
-    public void setRight(BinaryTreeNode right){
-        this.right = right;
+        System.out.print('{');
+        System.out.print(iData);
+        System.out.print(", ");
+        System.out.print(dData);
+        System.out.print("} ");
     }
 
 }
 
-class BinaryTree {
-    private BinaryTreeNode root;
+class Tree {
+    private Node root;
 
-    public BinaryTree(){
-        this.root = null;
+    public Tree(){
+        root = null;
     }
 
-    public BinaryTreeNode getRoot(){
-        return root;
-    }
+    public Node find(int key){
+        Node current = root;
+        while(current.iData != key){
+            if(key < current.iData)
+                current = current.leftChild;
+            else
+                current = current.rightChild;
 
-    public void insert(int data){
-        root = insertRecursive(root, data);
-    }
-
-    private BinaryTreeNode insertRecursive(BinaryTreeNode current, int data){
-        if(current == null){
-            return new BinaryTreeNode(data);
+            if(current == null)
+                return null;
         }
-
-        if(data < current.getData()){
-            current.setLeft(insertRecursive(current.getLeft(), data));
-        }else if (data > current.getData()){
-            current.setRight(insertRecursive(current.getRight(), data));
-        }
-
         return current;
     }
 
-    public boolean search(int data){
-        return searchRecursive(root, data);
+    public void insert(int id, double dd)
+    {
+        Node newNode = new Node();
+        newNode.iData = id;
+        newNode.dData = dd;
+        if(root == null)
+            root = newNode;
+        else{
+            Node current = root;
+            Node parent;
+            while(true)
+            {
+                parent = current;
+                if(id < current.iData) { // go left
+                    current = current.leftChild;
+                    if(current==null){
+                        parent.leftChild = newNode;
+                        return;
+                    }
+                }else{ // go right
+                    current = current.rightChild;
+                    if(current == null)
+                    {
+                        parent.rightChild = newNode;
+                        return;
+                    }
+                }
+            }
+        }
     }
 
-    private boolean searchRecursive(BinaryTreeNode current, int data){
-        if(current == null){
-            return false;
-        }
-
-        if(data == current.getData()){
-            return true;
-        }
-
-        if(data < current.getData()){
-            return searchRecursive(current.getLeft(), data);
-        }else {
-            return searchRecursive(current.getRight(), data);
-        }
-    }
 }
 public class BinaryTreeApp {
-    public static void main(String[] args)
-    {
-        BinaryTree binaryTree = new BinaryTree();
-
-        binaryTree.insert(10);
-        binaryTree.insert(5);
-        binaryTree.insert(15);
-        binaryTree.insert(3);
-        binaryTree.insert(7);
-        binaryTree.insert(12);
-        binaryTree.insert(12);
-        binaryTree.insert(20);
-
-        BinaryTreeNode root = binaryTree.getRoot();
-
-        System.out.println("binary tree: ");
-        printInOrder(root);
-
-        int searchData =  7;
-        System.out.println("\nSearching for " + searchData + ": " + binaryTree.search(searchData));
-
-    }
-
-    public static void printInOrder(BinaryTreeNode node){
-        if(node != null){
-            printInOrder(node.getLeft());
-            System.out.print(node.getData() + " ");
-            printInOrder(node.getRight());
-        }
+    public static void main(String[] args) {
     }
 }
