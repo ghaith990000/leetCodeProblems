@@ -100,4 +100,23 @@ public class AVLTree {
         node.setHeight(0);
         return node;
     }
+
+    // Level order traveral of BST
+    void levelOrderTraversal(){
+        Queue<BinaryNode> queue = new LinkedList<BinaryNode>();
+        queue.add(root);
+        System.out.println("printing Level order traversal of AVL Tree...");
+        if(root == null){
+            System.out.println("Tree does not exists !");
+            return;
+        }
+        while(!queue.isEmpty()){
+            BinaryNode presentNode = queue.remove();
+            System.out.print(presentNode.getValue() + " ");
+            if(presentNode.getLeft() != null)
+                queue.add(presentNode.getLeft());
+            if(presentNode.getRight() != null)
+                queue.add(presentNode.getRight());
+        }
+    }
 }
