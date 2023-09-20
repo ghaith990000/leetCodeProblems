@@ -26,6 +26,34 @@ public class AVLTree {
         }else {
             currentNode.setRight(insert(currentNode.getRight(), value));
         }
+
+        // this is where we will do AVL specific work
+        int balance = checkBalance(currentNode.getLeft(), currentNode.getRight());
+        if(balance > 1){
+            if(checkBalance(currentNode.getLeft().getLeft(), currentNode.getLeft().getRight()) > 0){
+                currentNode = rightRotate(currentNode); // LL Condition
+            }else{
+                currentNode.setLeft(leftRotate(currentNode.getLeft()));
+                currentNode = rightRotate(currentNode);
+            }
+        }else if(balance < -1){
+            if(checkBalance(currentNode.getRight().getRight(), currentNode.getRight().getLeft()) > 0){
+                currentNode = leftRotate(currentNode);
+            }else {
+                currentNode.setRight(rightRotate(currentNode.getRight()));  // RL Condition
+                currentNode = leftRotate(currentNode);
+            }
+        }
+
+        if(currentNode.getLeft() != null){
+            currentNode.getLeft().setHeight(calculateHeight(currentNode.getLeft()));
+        }
+
+        if(currentNode.getRight() != null){
+            currentNode.getRight().setHeight(calculateHeight(currentNode.getRight()));
+        }
+        currentNode.setHeight(calculateHeight(currentNode));
+        return currentNode;
     }
 
     private BinaryNode leftRotate(BinaryNode currentNode){
