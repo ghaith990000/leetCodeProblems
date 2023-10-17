@@ -3,33 +3,65 @@ package graphs;
 import java.util.*;
 
 public class BasicGraph {
-    private int numVertices;
-    private LinkedList<Integer>[] adjacencyList;
+    private int V;  // number of nodes
 
-    public BasicGraph(int numVertices){
-        this.numVertices = numVertices;
-        adjacencyList = new LinkedList[numVertices];
+    private LinkedList<Integer> adj[];
 
-        for(int i=0; i<numVertices; i++){
-            adjacencyList[i] = new LinkedList<>();
+    public BasicGraph(int v)
+    {
+        V = v;
+        adj = new LinkedList[v];
+        for(int i =0; i<v; ++i){
+            adj[i] = new LinkedList<>();
         }
 
-
     }
 
-    public void addEdge(int source, int destination){
-        adjacencyList[source].add(destination);
-        adjacencyList[destination].add(source);
+    void addEdge(int v, int w)
+    {
+        adj[v].add(w);
     }
 
-    public void printGraph(){
-        for(int i=0; i<numVertices; i++){
-            System.out.print("Vertex " + i + " is connected to: ");
-            for(Integer vertex : adjacencyList[i]){
-                System.out.print(vertex + " ");
+    void DFSUtil(int vertex, boolean nodes[])
+    {
+        nodes[vertex] = true;
+        System.out.print(vertex + " ");
+        int a = 0;
+
+        for(int i=0; i<adj[vertex].size(); i++){
+            a = adj[vertex].get(i);
+            if(!nodes[a])
+            {
+                DFSUtil(a, nodes);
             }
-            System.out.println();
         }
+    }
+
+    void DFS(int v){
+        boolean already[] = new boolean[V];
+        DFSUtil(v, already);
+    }
+
+    public static void main(String args[])
+    {
+        BasicGraph g = new BasicGraph(6);
+
+        g.addEdge(0, 1);
+        g.addEdge(0, 2);
+        g.addEdge(1, 0);
+        g.addEdge(1, 3);
+        g.addEdge(2,0);
+        g.addEdge(2,3);
+        g.addEdge(3,4);
+        g.addEdge(3,5);
+        g.addEdge(4,3);
+        g.addEdge(5, 3);
+
+        System.out.println(
+                "Following is Depth First Traversal: "
+        );
+
+        g.DFS(0);
     }
 }
 
