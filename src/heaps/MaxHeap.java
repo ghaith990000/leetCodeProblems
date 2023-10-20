@@ -67,4 +67,84 @@ public class MaxHeap {
 
         return root;
     }
+
+    void increaseKey(int i, int newVal){
+        arr[i] = newVal;
+        while(i != 0 && arr[parent(i)] < arr[i]){
+            int temp = arr[i];
+            arr[i] = arr[parent(i)];
+            arr[parent(i)] = temp;
+            i = parent(i);
+        }
+    }
+
+    // Returns the maximum key
+    int getMax(){
+        return arr[0];
+    }
+
+    int curSize(){
+        return heapSize;
+    }
+
+    // Deletes a key at given index i
+    void deleteKey(int i){
+        // It increases the value of the key to infinity and then removes the maximum
+        // value
+        increaseKey(i, Integer.MAX_VALUE);
+        removeMax();
+    }
+
+    // Inserts a new key 'x' in the Max Heap.
+    void insertKey(int x){
+        if(heapSize == maxSize){
+            System.out.println("\nOverflow: Could not insertKey\n");
+            return;
+        }
+
+        heapSize++;
+        int i = heapSize - 1;
+        arr[i] = x;
+
+        /* The max heap property is checked and if violation occurs, it is restored */
+        while(i != 0 && arr[parent(i)] < arr[i]){
+            int temp = arr[i];
+            arr[i] = arr[parent(i)];
+            arr[parent(i)] = temp;
+            i = parent(i);
+        }
+    }
+
+    // Driver program to test above functions
+    public static void main(String[] args){
+        MaxHeap h = new MaxHeap(15);
+
+        int k, i, n = 6;
+        System.out.println("Entered 6 keys: -3, 10, 12, 8, 2, 14 \n");
+        h.insertKey(3);
+        h.insertKey(10);
+        h.insertKey(12);
+        h.insertKey(8);
+        h.insertKey(2);
+        h.insertKey(14);
+
+        // Printing the current size of the heap
+        Systme.out.println("The current size of the heap is " + h.curSize() + "\n");
+
+        // Printing the root element which is actually the maximum element.
+        System.out.println("The current maximum element is "  + h.getMax() + "\n");
+
+
+        // Deleting key at index 2
+        h.deleteKey(2);
+
+        // Printing the size of the heap after deletion
+        System.out.println("The current size of the heap is " + h.curSize() + "\n");
+
+        // Inserting 2 new keys  into the heap
+        h.insertKey(15);
+        h.insertKey(5);
+        System.out.println("The current size of the heap is " + h.curSize() + "\n");
+        System.out.println("The current maximum element is " + h.getMax() + "\n");
+    }
 }
