@@ -129,7 +129,7 @@ public class MaxHeap {
         h.insertKey(14);
 
         // Printing the current size of the heap
-        Systme.out.println("The current size of the heap is " + h.curSize() + "\n");
+        System.out.println("The current size of the heap is " + h.curSize() + "\n");
 
         // Printing the root element which is actually the maximum element.
         System.out.println("The current maximum element is "  + h.getMax() + "\n");
